@@ -7,8 +7,8 @@ from time import sleep
 from multiprocessing import Process
 import yaml
 
-import lib.messageboard as mb
-from castro.vnc2flv.tools.flvrec import main as vnc2flv_main
+#import lib.messageboard as mb
+from tools.flvrec import main as vnc2flv_main
 
 # Get directory for storing files:
 DATA_DIR = os.environ.get('CASTRO_DATA_DIR') or tempfile.gettempdir()
@@ -51,8 +51,20 @@ class Castro:
 
     def init(self):
         args=['vnc2flv/tools/flvrec.py',
+               #'-n',
                '-o', self.filename,
+               #'-R', 3,
                '%s:%s' % (self.host, self.display) ]
+
+        # If password file is specified, insert it into args
+        #if self.passwd:
+         #   args.insert(4, '-P')
+          #  args.insert(5, self.passwd)
+
+        # If framerate is specified, insert it into args
+        #if self.framerate:
+         #   args.insert(4, '-r')
+          #  args.insert(5, self.framerate)
 
         # If clipping is specified, insert it into args
         if self.clipping:
@@ -67,11 +79,11 @@ class Castro:
     def start(self):
         self.recorder.start()
 
-    def flag_for_stop(self):
-        mb.recording_should_continue.write(False)
+    # def flag_for_stop(self):
+    #     mb.recording_should_continue.write(False)
 
     def stop(self):
-        self.flag_for_stop()
+        #self.flag_for_stop()
         self.recorder.join(timeout=30)
         if self.recorder.is_alive():
             self.recorder.terminate()
@@ -91,7 +103,6 @@ class Castro:
 
     def encode(self):
         """
-        Add keyframes - 1 per second (or every 12 frames)
         Note: The output *needs* to have a different name than the original
         The tip for adding the "-g" flag: http://www.infinitecube.com/?p=9
         """
