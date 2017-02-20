@@ -7,7 +7,7 @@ from time import sleep
 from multiprocessing import Process
 import yaml
 
-#import lib.messageboard as mb
+import castro.lib.messageboard as mb
 from tools.flvrec import main as vnc2flv_main
 
 # Get directory for storing files:
@@ -79,11 +79,11 @@ class Castro:
     def start(self):
         self.recorder.start()
 
-    # def flag_for_stop(self):
-    #     mb.recording_should_continue.write(False)
+    def flag_for_stop(self):
+        mb.recording_should_continue.write(False)
 
     def stop(self):
-        #self.flag_for_stop()
+        self.flag_for_stop()
         self.recorder.join(timeout=30)
         if self.recorder.is_alive():
             self.recorder.terminate()
