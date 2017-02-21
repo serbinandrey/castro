@@ -6,9 +6,9 @@
 ##
 
 import sys, time, socket, os, os.path, subprocess, signal
-from vnc2flv.flv import FLVWriter
-from vnc2flv.rfb import RFBNetworkClient, RFBError, PWDFile, PWDCache
-from vnc2flv.video import FLVVideoSink, str2clip, str2size
+from castro.lib.vnc2flv.flv import FLVWriter
+from castro.lib.vnc2flv.rfb import RFBNetworkClient, RFBError, PWDFile, PWDCache
+from castro.lib.vnc2flv.video import FLVVideoSink, str2clip, str2size
 
 
 ##  flvrec
